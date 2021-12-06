@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.zjut.dao.BuyDao">
+
+    <resultMap id="Buy1" type="cn.edu.zjut.po.Buy">
+        <id property="buy_id" column="buy_id"/>
+        <result property="time" column="time"/>
+        <result property="status" column="status"/>
+        <association property="owner" javaType="cn.edu.zjut.po.Owner">
+            <id property="owner_id" column="owner_id"/>
+            <result property="name" column="name"/>
+            <result property="password" column="password"/>
+            <result property="IDNumber" column="IDNumber"/>
+            <result property="sex" column="sex"/>
+            <result property="phone" column="phone"/>
+            <result property="certificated" column="certificated"/>
+        </association>
+        <association property="lot" javaType="cn.edu.zjut.po.Lot">
+            <id property="lot_id" column="lot_id"/>
+            <result property="address" column="address"/>
+            <result property="lot_picture" column="lot_picture"/>
+        </association>
+    </resultMap>
+
+<!--    通过业主ID筛选购买记录-->
+    <select id="selectBuyByOwnerId" parameterType="String" resultMap="Buy1">
+        select b.buy_id,b.time,b.status,o.*,l.lot_id,l.address,l.lot_picture
+        from buy b,owner o,lot l
+        where b.owner_id = o.owner_id
+          and l.lot_id = b.lot_id
+          and b.owner_id = #{owner_id}
+    </select>
+<!--    通过车位ID查询购买记录-->
+    <select id="selectBuyByLotId"  parameterType="String" resultMap="Buy1">
+        select b.buy_id,b.time,b.status,o.*,l.lot_id,l.address,l.lot_picture
+        from buy b,owner o,lot l
+        where b.owner_id = o.owner_id
+          and l.lot_id = b.lot_id
+          and b.lot_id =  #{lot_id}
+    </select>
+<!--业主购买后的级联操作，将车位表中的buy_id更新-->
+    <insert id="addBuy" parameterType="cn.edu.zjut.po.Buy">
+        insert into buy (buy_id,owner_id,lot_id,time,status)
+        values (#{buy_id},#{owner.owner_id},#{lot.lot_id},#{time},#{status})
+    </insert>
+    <update id="updateBuy" parameterType="cn.edu.zjut.po.Buy">
+        update buy
+        set owner_id=#{owner.owner_id}, lot_id=#{lot.lot_id}, time=#{time}, status=#{status}
+        where buy_id=#{buy_id}
+    </update>
+    <delete id="deleteBuy" parameterType="Integer">
+        delete
+        from buy
+        where buy_id = #{buy_id}
+    </delete>
+    <!--    更新业主付清尾款-->
+    <update id="updateBuyPayOff" parameterType="Integer">
+        update buy
+        set status = 1
+        where buy_id = #{buy_id}
+    </update>
+</mapper>

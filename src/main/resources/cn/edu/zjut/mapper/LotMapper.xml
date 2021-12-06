@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.zjut.dao.LotDao">
+
+    <resultMap id="Lot1" type="cn.edu.zjut.po.Lot">
+        <id property="lot_id" column="lot_id"/>
+        <result property="address" column="address"/>
+        <result property="lot_picture" column="lot_picture"/>
+        <association property="community" javaType="cn.edu.zjut.po.Community">
+            <id property="community_id" column="community_id"/>
+            <result property="name" column="name"/>
+            <result property="lot_num" column="lot_num"/>
+        </association>
+        <association property="buy" javaType="cn.edu.zjut.po.Buy">
+            <id property="buy_id" column="buy_id"/>
+            <result property="time" column="time"/>
+            <result property="status" column="status"/>
+        </association>
+        <association property="owner" javaType="cn.edu.zjut.po.Owner">
+            <id property="owner_id" column="owner_id"/>
+            <result property="name" column="name"/>
+            <result property="password" column="password"/>
+            <result property="IDNumber" column="IDNumber"/>
+            <result property="sex" column="sex"/>
+            <result property="phone" column="phone"/>
+            <result property="certificated" column="certificated"/>
+        </association>
+        <collection property="appoint" ofType="cn.edu.zjut.po.Appoint">
+            <id property="appoint_id" column="appoint_id"/>
+            <result property="status" column="status"/>
+            <result property="got" column="got"/>
+        </collection>
+    </resultMap>
+
+    <select id="selectLotByCommunityId" parameterType="String" resultMap="Lot1">
+        select l.*, c.name
+        from lot l,community c
+        where l.comunity_id = c.community_id
+          and l.community_id = #{community_id}
+    </select>
+
+    <select id="selectLotByLotId" parameterType="String" resultMap="Lot1">
+        select l.*, c.name
+        from lot l,community c
+        where l.comunity_id = c.community_id
+          and l.lot_id = #{lot_id}
+    </select>
+<!--查询已销售和未销售的车位-->
+    <select id="selectLotSoldByCommunityId" parameterType="String" resultMap="Lot1">
+        select l.*, c.name,
+        from lot l,community c,buy b
+        where l.buy_id is not null
+          and l.comunity_id = c.community_id
+          and l.buy_id = b.buy_id
+          and l.community_id = #{community_id}
+    </select>
+    <select id="selectLotUnsoldByCommunityId" parameterType="String" resultMap="Lot1">
+        select l.*, c.name,
+        from lot l,community c
+        where l.buy_id is null
+          and l.comunity_id = c.community_id
+          and l.community_id = #{community_id}
+    </select>
+
+    <select id="selectLotPictureById" parameterType="String" resultType="String">
+        select lot_picture from lot where lot_id = #{lot_id}
+    </select>
+<!--更新购买车位后的buy_id和owner_id-->
+    <update id="addBuyCascade" parameterType="Map">
+        update lot
+        set owner_id = #{owner_id}, buy_id = #{buy_id}
+        where lot_id = #{lot_id}
+    </update>
+
+    <insert id="addLot" parameterType="cn.edu.zjut.po.Lot">
+        insert into lot (lot_id,,community_id,address,lot_picture,owner_id,buy_id)
+        values (#{lot.lot_id},#{community.community_id},#{address},#{lot_picture},#{owner.owner_id},#{buy.buy_id})
+    </insert>
+    <update id="updateLot" parameterType="cn.edu.zjut.po.Lot">
+        update lot
+        set community_id=#{community.community_id}, address=#{address}, lot_picture=#{lot_picture}, owner_id=#{owner.owner_id}, buy_id=#{buy.buy_id}
+        where lot_id = #{lot_id}
+    </update>
+    <delete id="deleteLot" parameterType="String">
+        delete
+        from lot
+        where lot_id = #{lot_id}
+    </delete>
+</mapper>

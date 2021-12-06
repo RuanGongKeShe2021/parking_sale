@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.zjut.dao.DeveloperDao">
+
+    <resultMap id="Developer1" type="cn.edu.zjut.po.Developer">
+        <id property="developer_id" column="developer_id"/>
+        <result property="name" column="name"/>
+        <result property="password" column="pasword"/>
+        <result property="phone" column="phone"/>
+        <collection property="community" ofType="cn.edu.zjut.po.Community">
+            <id property="community_id" column="community_id"/>
+            <result property="name" column="name"/>
+            <result property="lot_num" column="lot_num"/>
+        </collection>
+        <collection property="admin" ofType="cn.edu.zjut.po.Admin">
+            <id property="admin_id" column="admin_id"/>
+            <result property="password" column="password"/>
+        </collection>
+    </resultMap>
+    <select id="selectDeveloperByName" parameterType="String" resultMap="Developer1">
+        select * from developer where name = #{name}
+    </select>
+    <select id="selectDeveloperById" parameterType="String" resultMap="Developer1">
+        select * from developer where developer_id = #{developer_id}
+    </select>
+    <select id="selectDeveloperCheck" parameterType="Map" resultMap="Developer1">
+        select * from developer where developer_id = #{developer_id} and password = #{password}
+    </select>
+</mapper>

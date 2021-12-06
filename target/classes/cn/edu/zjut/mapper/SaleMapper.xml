@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.zjut.dao.SaleDao">
+
+    <resultMap id="Sale1" type="cn.edu.zjut.po.Sale">
+        <id property="sale_id" column="sale_id"/>
+        <result property="begintime" column="begintime"/>
+        <result property="endtime" column="endtime"/>
+        <result property="content" column="content"/>
+        <result property="status" column="status"/>
+        <association property="developer" javaType="cn.edu.zjut.po.Developer">
+            <id property="developer_id" column="developer_id"/>
+            <result property="name" column="name"/>
+            <result property="password" column="password"/>
+            <result property="phone" column="phone"/>
+        </association>
+    </resultMap>
+<!--    展示正在进行的活动-->
+    <select id="selectSaleOn" resultMap="Sale1">
+        select s.*,d.name,d.phone
+        from sale s,developer d
+        where s.developer_id = d.developer_id and
+              s.status = 'on'
+    </select>
+<!--    查询所有的活动-->
+    <select id="findAll" resultMap="Sale1">
+        select s.*,d.name,d.phone
+        from sale s,developer d
+        where s.developer_id = d.developer_id
+    </select>
+
+    <insert id="addSale" parameterType="cn.edu.zjut.po.Sale">
+        insert into sale (sale_id,developer_id,begintime,endtime,content,status)
+        values (#{sale_id},#{developer.developer_id},#{begintime},#{endtime},#{content},#{status})
+    </insert>
+    <update id="updateSale" parameterType="cn.edu.zjut.po.Sale">
+        update sale
+        set developer_id=#{developer.developer_id}, begintime=#{begintime}, endtime=#{endtime}, content=#{content}, status=#{status}
+        where sale_id=#{sale_id}
+    </update>
+    <delete id="deleteSale" parameterType="Integer">
+        delete
+        from sale
+        where sale_id = #{sale_id}
+    </delete>
+</mapper>

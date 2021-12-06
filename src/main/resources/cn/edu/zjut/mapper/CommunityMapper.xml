@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.zjut.dao.CommunityDao">
+
+    <resultMap id="Community1" type="cn.edu.zjut.po.Community">
+        <id property="community_id" column="community_id"/>
+        <result property="name" column="name"/>
+        <result property="lot_num" column="lot_num"/>
+        <association property="developer" javaType="cn.edu.zjut.po.Developer">
+            <id property="developer_id" column="developer_id"/>
+            <result property="name" column="name"/>
+<!--            密码到时候隐藏-->
+            <result property="password" column="password"/>
+            <result property="phone" column="phone"/>
+        </association>
+        <association property="admin" javaType="cn.edu.zjut.po.Admin">
+            <id property="admin_id" column="admin_id"/>
+            <result property="password" column="password"/>
+        </association>
+        <collection property="lot" ofType="cn.edu.zjut.po.Lot">
+            <id property="lot_id" column="lot_id"/>
+            <result property="address" column="address"/>
+            <result property="lot_picture" column="lot_picture"/>
+        </collection>
+        <collection property="owner" ofType="cn.edu.zjut.po.Owner">
+            <id property="owner_id" column="owner_id"/>
+            <result property="name" column="name"/>
+            <result property="password" column="password"/>
+            <result property="IDNumber" column="IDNumber"/>
+            <result property="sex" column="sex"/>
+            <result property="phone" column="phone"/>
+            <result property="certificated" column="certificated"/>
+        </collection>
+    </resultMap>
+<!--    通过ID查询小区-->
+    <select id="selectCommunityById" parameterType="String" resultMap="Community1">
+        select c.community_id,c.name,c.lot_num,d.developer_id,d.name,d.phone,a.admin_id
+        from community c ,developer d,admin a
+        where c.developer_id = d.developer_id
+          and c.admin_id = a.admin_id
+          and c.community_id = #{community_id}
+    </select>
+
+<!--    通过业主ID查询其拥有房产的小区-->
+    <select id="selectCommunityByOwnerId" parameterType="String" resultMap="Community1">
+        select c.community_id,c.name,c.lot_num,d.developer_id,d.name,d.phone,a.admin_id
+        from community c ,developer d,admin a
+        where c.developer_id = d.developer_id
+          and c.admin_id = a.admin_id
+          and c.community_id=(
+            select community_id
+            from owner_community
+            where owner_id = #{owner_id}
+            )
+    </select>
+
+<!--    开发商用于查询其旗下房产-->
+    <select id="findAll"  parameterType="String" resultMap="Community1">
+        select c.community_id,c.name,c.lot_num,d.developer_id,d.name,d.phone,a.admin_id
+        from community c ,developer d,admin a
+        where c.developer_id = d.developer_id
+          and c.admin_id = a.admin_id
+          and c.developer_id = #{developer_id}
+    </select>
+
+<!--    小区的增删改-->
+    <insert id="addCommunity" parameterType="cn.edu.zjut.po.Community">
+        insert into community (community_id,name,lot_num,developer_id,admin_id)
+        values (#{community_id},#{name},#{lot_num},#{developer.developer_id},#{admin.admin_id})
+    </insert>
+    <update id="updateCommunity" parameterType="cn.edu.zjut.po.Community">
+        update community
+        set name=#{name}, lot_num=#{lot_num}, developer_id=#{developer.developer_id}, admin_id=#{admin.admin_id}
+        where community_id=#{community_id}
+    </update>
+    <delete id="deleteCommunity" parameterType="String">
+        delete
+        from community
+        where community_id = #{community_id}
+    </delete>
+</mapper>

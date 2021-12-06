@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.zjut.dao.AdminDao">
+
+    <resultMap id="Admin1" type="cn.edu.zjut.po.Community">
+        <id property="admin_id" column="admin_id"/>
+        <result property="password" column="password"/>
+        <association property="developer" javaType="cn.edu.zjut.po.Developer">
+            <id property="developer_id" column="developer_id"/>
+            <result property="name" column="name"/>
+            <result property="password" column="password"/>
+            <result property="phone" column="phone"/>
+        </association>
+        <association property="community" javaType="cn.edu.zjut.po.Community">
+            <id property="community_id" column="community"/>
+            <result property="name" column="name"/>
+            <result property="lot_num" column="lot_num"/>
+        </association>
+    </resultMap>
+
+<!--    开发商用于查看管理员-->
+    <select id="selectAdminById" parameterType="String" resultMap="Admin1">
+        select a.admin_id,d.developer_id,d.name,d.phone,c.community_id,c.name,c.lot_num
+        from admin a,developer d,community c
+        where a.developer_id = d.developer_id
+          and a.community_id = c.community_id
+          and a.admin_id = #{admin_id}
+    </select>
+
+<!--    开发商查看某小区管理员-->
+    <select id="selectAdminByCommunityId" parameterType="String" resultMap="Admin1">
+        select a.admin_id,d.developer_id,d.name,d.phone,c.community_id,c.name,c.lot_num
+        from admin a,developer d,community c
+        where a.developer_id = d.developer_id
+          and a.community_id = c.community_id
+          and a.community_id = #{community.community_id}
+    </select>
+
+<!--    开发商查看所有旗下管理员-->
+    <select id="findAll" parameterType="String" resultMap="Admin1">
+        select a.admin_id,d.developer_id,d.name,d.phone,c.community_id,c.name,c.lot_num
+        from admin a,developer d,community c
+        where a.developer_id = d.developer_id
+          and a.community_id = c.community_id
+          and a.developer_id = #{developer.developer_id}
+    </select>
+
+<!--    开发商增删改管理员-->
+    <insert id="addAdmin" parameterType="cn.edu.zjut.po.Community">
+        insert into admin (admin_id,password,developer_id,community_id)
+        values (#{admin_id},#{password},#{developer.developer_id},#{community.community_id})
+    </insert>
+    <update id="updateAdmin" parameterType="cn.edu.zjut.po.Community">
+        update admin
+        set password=#{password}, developer_id=#{developer.developer_id}, community_id=#{community.community_id}
+        where admin_id=#{admin_id}
+    </update>
+    <delete id="deleteAdmin" parameterType="String">
+        delete
+        from admin
+        where admin_id = #{admin_id}
+    </delete>
+</mapper>

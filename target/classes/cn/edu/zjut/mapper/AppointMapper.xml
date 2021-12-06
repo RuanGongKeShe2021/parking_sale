@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.zjut.dao.AppointDao">
+
+    <resultMap id="Appont1" type="cn.edu.zjut.po.Appoint">
+        <id property="appoint_id" column="appoint_id"/>
+        <result property="status" column="status"/>
+        <result property="got" column="got"/>
+        <association property="owner" javaType="cn.edu.zjut.po.Owner">
+            <id property="owner_id" column="owner_id"/>
+            <result property="name" column="name"/>
+            <result property="password" column="password"/>
+            <result property="IDNumber" column="IDNumber"/>
+            <result property="sex" column="sex"/>
+            <result property="phone" column="phone"/>
+            <result property="certificated" column="certificated"/>
+        </association>
+        <association property="lot" javaType="cn.edu.zjut.po.Lot">
+            <id property="lot_id" column="lot_id"/>
+            <result property="address" column="address"/>
+            <result property="lot_picture" column="lot_picture"/>
+        </association>
+        <association property="community" javaType="cn.edu.zjut.po.Community">
+            <id property="community_id" column="community_id"/>
+            <result property="name" column="name"/>
+            <result property="lot_num" column="lot_num"/>
+        </association>
+    </resultMap>
+    <select id="selectAppointByOwnerId" parameterType="String" resultMap="Appoint1">
+        select a.*,o.name,o.IDNumber,o.sex,o.phone,l.address,l.lot_picture,c.name
+        from appoint a,owner o,lot l,community c
+        where a.owner_id = o.owner_id
+          and a.community_id = c.community_id
+          and a.lot_id = l.lot_id
+          and a.owner_id = #{owner_id}
+    </select>
+
+    <select id="selectAppointByLotId"  parameterType="String" resultMap="Appoint1">
+        select a.*,o.name,o.IDNumber,o.sex,o.phone,l.address,l.lot_picture,c.name
+        from appoint a,owner o,lot l,community c
+        where a.owner_id = o.owner_id
+          and a.community_id = c.community_id
+          and a.lot_id = l.lot_id
+          and a.lot_id = #{lot_id}
+    </select>
+
+    <insert id="addAppoint" parameterType="cn.edu.zjut.po.Appoint">
+        insert into appoint (appoint_id,owner_id,lot_id,community_id,status,got)
+        values (#{appoint_id},#{owner.owner_id},#{lot.lot_id},#{community.community_id},#{status},#{got})
+    </insert>
+    <update id="updateAppoint" parameterType="cn.edu.zjut.po.Appoint">
+        update appoint
+        set owner_id=#{owner.owner_id}, lot_id=#{lot.lot_id}, community_id=#{community.community_id}, status=#{status}, got=#{got}
+        where appoint_id=#{appoint_id}
+    </update>
+    <delete id="deleteAppoint" parameterType="Integer">
+        delete
+        from appoint
+        where appoint_id = #{appoint_id}
+    </delete>
+<!--    更新预约表，车位号摇中-->
+    <update id="updateAppointGot" parameterType="Integer">
+        update appoint
+        set got = 1
+        where appoint_id=#{appoint_id}
+    </update>
+</mapper>

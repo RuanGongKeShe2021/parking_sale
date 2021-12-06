@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.zjut.dao.OwnerDao">
+
+    <resultMap id="Owner1" type="cn.edu.zjut.po.Owner">
+        <id property="owner_id" column="owner_id"/>
+        <result property="name" column="name"/>
+        <result property="password" column="password"/>
+        <result property="IDNumber" column="IDNumber"/>
+        <result property="sex" column="sex"/>
+        <result property="phone" column="phone"/>
+        <result property="certificated" column="certificated"/>
+        <collection property="appoint" ofType="cn.edu.zjut.po.Appoint">
+            <id property="appoint_id" column="appoint_id"/>
+            <result property="status" column="status"/>
+            <result property="got" column="got"/>
+        </collection>
+        <collection property="buy" ofType="cn.edu.zjut.po.Buy">
+            <id property="buy_id" column="buy_id"/>
+            <result property="time" column="time"/>
+            <result property="status" column="status"/>
+        </collection>
+        <collection property="community" ofType="cn.edu.zjut.po.Community">
+            <id property="community_id" column="community_id"/>
+            <result property="name" column="name"/>
+            <result property="lot_num" column="lot_num"/>
+        </collection>
+    </resultMap>
+
+    <resultMap id="Owner2" type="cn.edu.zjut.po.Owner">
+        <id property="owner_id" column="owner_id"/>
+        <result property="password" column="password"/>
+    </resultMap>
+<!--根据ID找业主-->
+    <select id="selectOwnerById" parameterType="String" resultMap="Owner1">
+        select * from owner where owner_id = #{owner_id}
+    </select>
+
+<!--    登录验证-->
+    <select id="selectOwnerCheck"  parameterType="Map" resultMap="Owner2">
+        select * from owner where owner_id = #{owner_id} and password = #{password}
+    </select>
+
+<!--    筛选出一个小区中的所有业主-->
+    <select id="selectOwnerByCommunityId" parameterType="String" resultMap="Owner1">
+        select *
+        from owner
+        where owner_id=(
+            select owner_id
+            from owner_community
+            where community_id = #{community_id}
+            )
+    </select>
+
+<!--    业主的增删改-->
+    <insert id="addOwner" parameterType="cn.edu.zjut.po.Owner">
+        insert into owner (owner_id,name,password,IDNumber,sex,phone,certificted)
+        values (#{owner_id},#{name},#{password},#{IDNumber},#{sex},#{phone},#{certificated})
+    </insert>
+    <update id="updateOwner" parameterType="cn.edu.zjut.po.Owner">
+        update owner
+        set name=#{name}, password=#{password}, IDNumber=#{IDNumber}, sex=#{sex}, phone=#{sex}, certificated=#{certificated}
+        where owner_id=#{owner_id}
+    </update>
+    <delete id="deleteOwner" parameterType="String">
+        delete
+        from owner
+        where owner_id = #{owner_id}
+    </delete>
+</mapper>
