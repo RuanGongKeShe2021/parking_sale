@@ -23,6 +23,13 @@
         </association>
     </resultMap>
 
+    <select id="selectBuyById" parameterType="Integer" resultMap="Buy1">
+        select b.buy_id,b.time,b.status,o.*,l.lot_id,l.address,l.lot_picture
+        from buy b,owner o,lot l
+        where b.owner_id = o.owner_id
+          and l.lot_id = b.lot_id
+          and b.buy_id = #{buy_id}
+    </select>
 <!--    通过业主ID筛选购买记录-->
     <select id="selectBuyByOwnerId" parameterType="String" resultMap="Buy1">
         select b.buy_id,b.time,b.status,o.*,l.lot_id,l.address,l.lot_picture

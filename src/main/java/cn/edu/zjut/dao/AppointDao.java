@@ -10,9 +10,9 @@ import java.util.List;
 @Mapper
 public interface AppointDao {
     public List<Appoint> selectAppointByOwnerId(String owner_id);
+    public List<Appoint> selectAppointByLotId(String lot_id);
     public int addAppoint(Appoint appoint);
     public int updateAppoint(Appoint appoint);
     public int deleteAppoint(int appoint_id);
-    public List<Appoint> selectAppointByLotId(String lot_id);
-    public int updateStatus(int lot_id);
+    public int updateAppointGot(int lot_id);
 }

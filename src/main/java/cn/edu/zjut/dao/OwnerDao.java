@@ -16,6 +16,6 @@ public interface OwnerDao {
     public int addOwner(Owner owner);
     public int updateOwner(Owner owner);
     public int updateOwnerCertification(String owner_id);
-    public int deleteOwner(Owner owner);
+    public int deleteOwner(String owner_id);
     public List<Owner> selectOwnerByCommunityId(String community_id);
 }

@@ -7,7 +7,7 @@ public class Sale {
     private Date begintime;
     private Date endtime;
     private String content;
-    private Developer developer;
+    private Community community;
 
     public Sale() {
     }
@@ -44,11 +44,11 @@ public class Sale {
         this.content = content;
     }
 
-    public Developer getDeveloper() {
-        return developer;
+    public Community getCommunity() {
+        return community;
     }
 
-    public void setDeveloper(Developer developer) {
-        this.developer = developer;
+    public void setCommunity(Community community) {
+        this.community = community;
     }
 }

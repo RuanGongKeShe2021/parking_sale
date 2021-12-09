@@ -10,6 +10,7 @@ public interface IAppointService {
     public boolean UpdateAppoint(Appoint appoint);
     public boolean DeleteAppoint(int appoint_id);
     public List<Appoint> FindAppointByLot_id(String lot_id);
-    public boolean UpdateStatus(int appoint_id);
-    public boolean AppointGot(String lot_id);
+    public boolean UpdateAppointGot(int appoint_id);
+
+    public int AppointGot(String lot_id);
 }

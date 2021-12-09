@@ -5,6 +5,8 @@ import cn.edu.zjut.po.Owner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service("ownerService")
 public class OwnerService implements IOwnerService{
     @Autowired
@@ -33,7 +35,18 @@ public class OwnerService implements IOwnerService{
     }
 
     @Override
-    public boolean UpdateOwnerInfo(String owner_id) {
+    public boolean UpdateOwner(Owner owner) {
+        try {
+            if(ownerDao.updateOwner(owner) == 1)
+                return true;
+            else return false;
+        }catch (Exception e){
+            e.printStackTrace();
+        }return false;
+    }
+
+    @Override
+    public boolean UpdateOwnerCertification(String owner_id) {
         try {
             if(ownerDao.updateOwnerCertification(owner_id) == 1)
                 return true;
@@ -44,7 +57,23 @@ public class OwnerService implements IOwnerService{
     }
 
     @Override
-    public Owner OwnerInfo(String owner_id) {
+    public boolean DeleteOwner(String owner_id) {
+        try {
+            if(ownerDao.deleteOwner(owner_id) == 1)
+                return true;
+            else return false;
+        }catch (Exception e){
+            e.printStackTrace();
+        }return false;
+    }
+
+    @Override
+    public Owner SelectOwnerById(String owner_id) {
         return ownerDao.selectOwnerById(owner_id);
+    }
+
+    @Override
+    public List<Owner> SelectOwnerByCommunityId(String community_id) {
+        return ownerDao.selectOwnerByCommunityId(community_id);
     }
 }

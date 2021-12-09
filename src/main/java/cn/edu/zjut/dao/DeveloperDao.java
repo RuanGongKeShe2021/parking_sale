@@ -10,6 +10,4 @@ public interface DeveloperDao {
     public Developer selectDeveloperByName(String name);
     public Developer selectDeveloperById(String developer_id);
     public Developer selectDeveloperCheck(String developer_id,String password);
-//    public Developer selectDeveloperByAdminId(String admin_id);
-//    public Developer selectDeveloperByCommunityId(String community_id);
 }

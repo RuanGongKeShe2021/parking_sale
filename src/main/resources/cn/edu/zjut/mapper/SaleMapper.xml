@@ -9,34 +9,33 @@
         <result property="endtime" column="endtime"/>
         <result property="content" column="content"/>
         <result property="status" column="status"/>
-        <association property="developer" javaType="cn.edu.zjut.po.Developer">
-            <id property="developer_id" column="developer_id"/>
+        <association property="community" javaType="cn.edu.zjut.po.Community">
+            <id property="community_id" column="community_id"/>
             <result property="name" column="name"/>
-            <result property="password" column="password"/>
-            <result property="phone" column="phone"/>
+            <result property="lot_num" column="lot_num"/>
         </association>
     </resultMap>
 <!--    展示正在进行的活动-->
     <select id="selectSaleOn" resultMap="Sale1">
-        select s.*,d.name,d.phone
-        from sale s,developer d
-        where s.developer_id = d.developer_id and
+        select s.*,c.name,c.lot_num
+        from sale s,community c
+        where s.community_id = c.community_id and
               s.status = 'on'
     </select>
 <!--    查询所有的活动-->
     <select id="findAll" resultMap="Sale1">
-        select s.*,d.name,d.phone
-        from sale s,developer d
-        where s.developer_id = d.developer_id
+        select s.*,c.name,c.lot_num
+        from sale s,community c
+        where s.community_id = c.community_id
     </select>
 
     <insert id="addSale" parameterType="cn.edu.zjut.po.Sale">
-        insert into sale (sale_id,developer_id,begintime,endtime,content,status)
-        values (#{sale_id},#{developer.developer_id},#{begintime},#{endtime},#{content},#{status})
+        insert into sale (sale_id,community_id,begintime,endtime,content,status)
+        values (#{sale_id},#{community.community_id},#{begintime},#{endtime},#{content},#{status})
     </insert>
     <update id="updateSale" parameterType="cn.edu.zjut.po.Sale">
         update sale
-        set developer_id=#{developer.developer_id}, begintime=#{begintime}, endtime=#{endtime}, content=#{content}, status=#{status}
+        set community_id=#{community.community_id}, begintime=#{begintime}, endtime=#{endtime}, content=#{content}, status=#{status}
         where sale_id=#{sale_id}
     </update>
     <delete id="deleteSale" parameterType="Integer">

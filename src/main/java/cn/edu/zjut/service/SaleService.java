@@ -13,13 +13,13 @@ public class SaleService implements ISaleService{
     private SaleDao saleDao;
 
     @Override
-    public List<Sale> ShowSaleOn() {
-        return saleDao.selectSaleOn();
+    public List<Sale> SelectSaleOnByCommunityId(String community_id) {
+        return saleDao.selectSaleOnByCommunityId(community_id);
     }
 
     @Override
-    public List<Sale> FindAll() {
-        return saleDao.findAll();
+    public List<Sale> SelectSaleByCommunityId(String community_id) {
+        return saleDao.selectSaleByCommunityId(community_id);
     }
 
     @Override

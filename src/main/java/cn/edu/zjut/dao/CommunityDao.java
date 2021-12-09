@@ -10,9 +10,9 @@ import java.util.List;
 @Mapper
 public interface CommunityDao {
     public Community selectCommunityById(String community_id);
+    public List<Community> selectCommunityByOwnerId(String owner_id);
     public List<Community> findAll(String developer_id);
     public int addCommunity(Community community);
     public int updateCommunity(Community community);
     public int deleteCommunity(String community_id);
-//    public Community selectCommunityByAdminId(String admin_id);
 }

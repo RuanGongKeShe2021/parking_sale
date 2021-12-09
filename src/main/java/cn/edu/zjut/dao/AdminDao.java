@@ -10,9 +10,9 @@ import java.util.List;
 @Mapper
 public interface AdminDao {
     public Admin selectAdminById(String admin_id);
+    public Admin selectAdminByCommunityId(String community_id);
     public List<Admin> findAll(String developer_id);
     public int addAdmin(Admin admin);
     public int updateAdmin(Admin admin);
     public int deleteAdmin(String admin_id);
-    public Admin selectAdminByCommunityId(String community_id);
 }

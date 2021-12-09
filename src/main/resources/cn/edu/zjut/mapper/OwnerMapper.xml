@@ -53,6 +53,11 @@
             )
     </select>
 
+    <update id="updateOwnerCertification" parameterType="String">
+        update owner
+        set certificted = 1
+        where owner_id = #{owner_id}
+    </update>
 <!--    业主的增删改-->
     <insert id="addOwner" parameterType="cn.edu.zjut.po.Owner">
         insert into owner (owner_id,name,password,IDNumber,sex,phone,certificted)

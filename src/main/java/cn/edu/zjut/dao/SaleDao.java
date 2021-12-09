@@ -9,8 +9,8 @@ import java.util.List;
 @Repository("saleDao")
 @Mapper
 public interface SaleDao {
-    public List<Sale> selectSaleOn();
-    public List<Sale> findAll();
+    public List<Sale> selectSaleOnByCommunityId(String community_id);
+    public List<Sale> selectSaleByCommunityId(String community_id);
     public int addSale(Sale sale);
     public int updateSale(Sale sale);
     public int deleteSale(int sale_id);

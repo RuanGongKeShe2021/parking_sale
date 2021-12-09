@@ -18,8 +18,18 @@ public class LotService implements ILotService{
     }
 
     @Override
-    public List<Lot> FindAllLot(String community_id) {
+    public List<Lot> SelectLotByCommunityId(String community_id) {
         return lotDao.selectLotByCommunityId(community_id);
+    }
+
+    @Override
+    public List<Lot> SelectLotSoldByCommunityId(String community_id) {
+        return lotDao.selectLotSoldByCommunityId(community_id);
+    }
+
+    @Override
+    public List<Lot> SelectLotUnSoldByCommunityId(String community_id) {
+        return lotDao.selectLotUnSoldByCommunityId(community_id);
     }
 
     @Override
@@ -53,7 +63,27 @@ public class LotService implements ILotService{
     }
 
     @Override
-    public String GetRootOfPicture(String lot_id) {
+    public String SelectLotPictureById(String lot_id) {
         return lotDao.selectLotPictureById(lot_id);
+    }
+
+    @Override
+    public boolean AddBuyCascade(String owner_id, int lot_id) {
+        try {
+            if(lotDao.addBuyCascade(owner_id,lot_id) == 1)return true;
+            else return false;
+        }catch (Exception e){
+            e.printStackTrace();
+        }return false;
+    }
+
+    @Override
+    public boolean DeleteBuyCascade(String lot_id) {
+        try {
+            if(lotDao.deleteBuyCascade(lot_id) == 1)return true;
+            else return false;
+        }catch (Exception e){
+            e.printStackTrace();
+        }return false;
     }
 }

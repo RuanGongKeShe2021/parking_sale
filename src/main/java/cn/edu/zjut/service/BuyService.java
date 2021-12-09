@@ -33,9 +33,9 @@ public class BuyService implements  IBuyService{
     }
 
     @Override
-    public boolean DeleteBuy(Buy buy) {
+    public boolean DeleteBuy(int buy_id) {
         try {
-            if(buyDao.deleteBuy(buy) == 1)return true;
+            if(buyDao.deleteBuy(buy_id) == 1)return true;
             else return false;
         }catch (Exception e){
             e.printStackTrace();
@@ -50,5 +50,20 @@ public class BuyService implements  IBuyService{
     @Override
     public List<Buy> SelectBuyByOwnerId(String owner_id) {
         return buyDao.selectBuyByOwnerId(owner_id);
+    }
+
+    @Override
+    public Buy SelectBuyById(int buy_id) {
+        return buyDao.selectBuyById(buy_id);
+    }
+
+    @Override
+    public boolean UpdateBuyPayOff(int buy_id) {
+        try {
+            if(buyDao.updateBuyPayOff(buy_id) == 1)return true;
+            else return false;
+        }catch (Exception e){
+            e.printStackTrace();
+        }return false;
     }
 }

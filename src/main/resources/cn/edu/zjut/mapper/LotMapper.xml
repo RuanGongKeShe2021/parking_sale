@@ -46,7 +46,7 @@
         where l.comunity_id = c.community_id
           and l.lot_id = #{lot_id}
     </select>
-<!--查询已销售和未销售的车位-->
+<!--查询某小区已销售和未销售的车位-->
     <select id="selectLotSoldByCommunityId" parameterType="String" resultMap="Lot1">
         select l.*, c.name,
         from lot l,community c,buy b
@@ -87,4 +87,9 @@
         from lot
         where lot_id = #{lot_id}
     </delete>
+    <update id="deleteBuyCascade" parameterType="Integer">
+        update lot
+        set owner_id = null,buy_id = null
+        where lot_id = #{lot_id}
+    </update>
 </mapper>

@@ -55,9 +55,9 @@ public class AppointService implements IAppointService{
 
 //    摇号得结果后更改摇中appoint的状态字段status
     @Override
-    public boolean UpdateStatus(int appoint_id) {
+    public boolean UpdateAppointGot(int appoint_id) {
         try {
-            if(appointDao.updateStatus(appoint_id) == 1)return true;
+            if(appointDao.updateAppointGot(appoint_id) == 1)return true;
             else return false;
         }catch (Exception e){
             e.printStackTrace();
@@ -66,11 +66,13 @@ public class AppointService implements IAppointService{
 
 //    摇号
     @Override
-    public boolean AppointGot(String lot_id) {
+    public int AppointGot(String lot_id) {
         List<Appoint> list = appointDao.selectAppointByLotId(lot_id);
         Random rd = new Random();
         int randon = rd.nextInt();
         int tmp = list.get(randon).getAppoint_id();
-        return UpdateStatus(tmp);
+        if(UpdateAppointGot(tmp)){
+            return tmp;
+        }else return 0;
     }
 }

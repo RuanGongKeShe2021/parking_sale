@@ -22,7 +22,12 @@ public class DeveloperService implements IDeveloperService{
     }
 
     @Override
-    public Developer DeveloperInfo(String name) {
+    public Developer SelectDeveloperByName(String name) {
         return developerDao.selectDeveloperByName(name);
+    }
+
+    @Override
+    public Developer SelectDeveloperById(String developer_id) {
+        return developerDao.selectDeveloperById(developer_id);
     }
 }
