@@ -5,39 +5,54 @@ import cn.edu.zjut.service.SaleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-@Controller
+@RestController
 @RequestMapping("/")
 public class adminSaleController {
     @Autowired
     private SaleService saleService;
     @RequestMapping("/")
-    public String addSale(Sale sale){
+    public Map addSale(Sale sale){
+        Map result=new HashMap();
         if (saleService.AddSale(sale)){
-            return "";
+            result.put("success",true);
         }
-        else return "";
+        else {
+            result.put("success",false);
+        }
+        return  result;
     }
     @RequestMapping("/")
-    public String updateSale(Sale sale){
+    public Map updateSale(Sale sale){
+        Map result=new HashMap();
         if (saleService.UpdateSale(sale)){
-            return "";
+            result.put("success",true);
         }
-        else return "";
+        else {
+            result.put("success",false);
+        }
+        return  result;
     }
     @RequestMapping("/")
-    public String deleteSale(int sale_id){
+    public Map deleteSale(int sale_id){
+        Map result=new HashMap();
         if (saleService.DeleteSale(sale_id)){
-            return "";
+            result.put("success",true);
         }
-        else return "";
+        else {
+            result.put("success",false);
+        }
+        return  result;
     }
     @RequestMapping("/")
-    public String selectSaleByCommunity(String community_id){
+    public List<Sale> selectSaleByCommunity(String community_id){
         List<Sale> saleList = saleService.SelectSaleByCommunityId(community_id);
 //      将活动信息传到前端
-        return "";
+        return saleList;
     }
 }

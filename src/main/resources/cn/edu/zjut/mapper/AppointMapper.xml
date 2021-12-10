@@ -46,6 +46,9 @@
     </select>
 
     <insert id="addAppoint" parameterType="cn.edu.zjut.po.Appoint">
+        <selectKey keyProperty="appoint_id" resultType="Integer" order="BEFORE">
+            select decode(max(appoint_id),null,1,max(appoint_id)+1) as newAppoint_id
+        </selectKey>
         insert into appoint (appoint_id,owner_id,lot_id,community_id,status,got)
         values (#{appoint_id},#{owner.owner_id},#{lot.lot_id},#{community.community_id},#{status},#{got})
     </insert>

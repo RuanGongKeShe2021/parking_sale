@@ -3,6 +3,7 @@ package cn.edu.zjut.service;
 import cn.edu.zjut.dao.AppointDao;
 import cn.edu.zjut.po.Appoint;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.Random;
 
 @Service("appointService")
 public class AppointService implements IAppointService{
+
     @Autowired
     private AppointDao appointDao;
 
@@ -69,7 +71,8 @@ public class AppointService implements IAppointService{
     public int AppointGot(String lot_id) {
         List<Appoint> list = appointDao.selectAppointByLotId(lot_id);
         Random rd = new Random();
-        int randon = rd.nextInt();
+        int number=list.size();
+        int randon = rd.nextInt(number);
         int tmp = list.get(randon).getAppoint_id();
         if(UpdateAppointGot(tmp)){
             return tmp;
