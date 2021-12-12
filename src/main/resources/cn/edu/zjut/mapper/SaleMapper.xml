@@ -30,6 +30,9 @@
     </select>
 
     <insert id="addSale" parameterType="cn.edu.zjut.po.Sale">
+        <selectKey keyProperty="sale_id" resultType="Integer" order="BEFORE">
+            select decode(max(sale_id),null,1,max(sale_id)+1) as newSale_id
+        </selectKey>
         insert into sale (sale_id,community_id,begintime,endtime,content,status)
         values (#{sale_id},#{community.community_id},#{begintime},#{endtime},#{content},#{status})
     </insert>

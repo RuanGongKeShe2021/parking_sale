@@ -48,6 +48,9 @@
     </select>
 <!--业主购买后的级联操作，将车位表中的buy_id更新-->
     <insert id="addBuy" parameterType="cn.edu.zjut.po.Buy">
+        <selectKey keyProperty="buy_id" resultType="Integer" order="BEFORE">
+            select decode(max(buy_id),null,1,max(buy_id)+1) as newBuy_id
+        </selectKey>
         insert into buy (buy_id,owner_id,lot_id,time,status)
         values (#{buy_id},#{owner.owner_id},#{lot.lot_id},#{time},#{status})
     </insert>

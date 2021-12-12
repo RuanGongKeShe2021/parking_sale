@@ -5,6 +5,7 @@ import cn.edu.zjut.dao.LotDao;
 import cn.edu.zjut.po.Appoint;
 import cn.edu.zjut.po.Lot;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -14,6 +15,7 @@ import java.util.Random;
 
 @Service("appointService")
 public class AppointService implements IAppointService{
+
     @Autowired
     private AppointDao appointDao;
     @Autowired
