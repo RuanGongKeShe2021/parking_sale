@@ -22,6 +22,7 @@
             <id property="lot_id" column="lot_id"/>
             <result property="address" column="address"/>
             <result property="lot_picture" column="lot_picture"/>
+            <result property="status" column="status"/>
         </collection>
         <collection property="owner" ofType="cn.edu.zjut.po.Owner">
             <id property="owner_id" column="owner_id"/>
@@ -79,4 +80,6 @@
         from community
         where community_id = #{community_id}
     </delete>
+
+
 </mapper>

@@ -18,4 +18,10 @@ public class adminController {
         }
         else return "adminlogin";
     }
+    @RequestMapping("/")
+    public String updateAdmin(Admin admin){
+        if(adminService.UpdateAdmin(admin)){
+            return "";
+        }else return "";
+    }
 }

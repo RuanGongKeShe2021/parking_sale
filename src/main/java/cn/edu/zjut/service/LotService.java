@@ -13,6 +13,11 @@ public class LotService implements ILotService{
     private LotDao lotDao;
 
     @Override
+    public void updateStatusByTime() {
+        lotDao.updateStatusByTime();
+    }
+
+    @Override
     public Lot SelectLotById(String lot_id) {
         return lotDao.selectLotByLotId(lot_id);
     }
@@ -81,6 +86,21 @@ public class LotService implements ILotService{
     public boolean DeleteBuyCascade(String lot_id) {
         try {
             if(lotDao.deleteBuyCascade(lot_id) == 1)return true;
+            else return false;
+        }catch (Exception e){
+            e.printStackTrace();
+        }return false;
+    }
+
+    @Override
+    public List<Lot> SelectLotSaleStatus(String community_id) {
+        return lotDao.selectLotSaleStatus(community_id);
+    }
+
+    @Override
+    public boolean UpdateSaleStatus(String lot_id) {
+        try {
+            if(lotDao.updateSaleStatus(lot_id) == 1)return true;
             else return false;
         }catch (Exception e){
             e.printStackTrace();

@@ -11,6 +11,7 @@ public class Lot {
     private Buy buy = null;
     private Owner owner = null;
     private Set appoint = new HashSet(0);
+    private int sale_status = 0;
 
     public Lot() {
     }
@@ -69,5 +70,13 @@ public class Lot {
 
     public void setAppoint(Set appoint) {
         this.appoint = appoint;
+    }
+
+    public int getSale_status() {
+        return sale_status;
+    }
+
+    public void setSale_status(int sale_status) {
+        this.sale_status = sale_status;
     }
 }

@@ -27,25 +27,8 @@ public class ownerController {
         return "";
     }
     @RequestMapping("/")
-    public String addOwner(@RequestBody Owner owner){
-        if (ownerService.Register(owner)){
-            return "";
-        }
-        else {
-//            该ID已被注册
-            return "";
-        }
-    }
-    @RequestMapping("/")
     public String updateOwner(Owner owner){
         if (ownerService.UpdateOwner(owner)){
-            return "";
-        }
-        else return "";
-    }
-    @RequestMapping("/")
-    public String deleteOwner(String owner_id){
-        if (ownerService.DeleteOwner(owner_id)){
             return "";
         }
         else return "";

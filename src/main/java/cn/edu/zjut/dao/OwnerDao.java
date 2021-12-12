@@ -18,4 +18,6 @@ public interface OwnerDao {
     public int updateOwnerCertification(String owner_id);
     public int deleteOwner(String owner_id);
     public List<Owner> selectOwnerByCommunityId(String community_id);
+    public List<Owner> selectUnCertificated(String community_id);
+    public List<Owner> selectCertificated(String community_id);
 }
