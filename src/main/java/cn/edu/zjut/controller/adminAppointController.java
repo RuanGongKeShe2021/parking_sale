@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.HashMap;
 import java.util.Map;
 
+//管理员对预约进行摇号
+
+
 @Controller
 @RequestMapping("/")
 public class adminAppointController {
@@ -20,10 +23,6 @@ public class adminAppointController {
     public String appointGot(String community_id){
         Map<String,Integer> map = appointService.AppointGot(community_id);
 //        将摇中号传到前端
-        Map<String,Integer> result=new HashMap<String,Integer>();
-        result.put("got_appoint_id",got_appoint_id);
-        return result;
+        return "";
     }
-
-
 }

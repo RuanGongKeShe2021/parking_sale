@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.HashMap;
 import java.util.Map;
 
+//管理员管理，主要用于开发商进行操作，管理员的增删改
+
 @Controller
 @RequestMapping("/admin")
 public class adminController {

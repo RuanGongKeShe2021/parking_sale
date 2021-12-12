@@ -11,6 +11,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+//管理员对活动的管理，发布修改删除查询
+
 @RestController
 @RequestMapping("/")
 public class adminSaleController {

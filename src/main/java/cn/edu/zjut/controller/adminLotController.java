@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+//管理员对车位的增删改，并且最后一个函数是对活动与车位是否可进行购买的更新，需要管理员在活动结束时调用
+//使活动标志位变为End（mapper中已写时间比较mysql语句）
+
 @Controller
 @RequestMapping("/")
 public class adminLotController {

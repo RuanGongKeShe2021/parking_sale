@@ -15,6 +15,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+//业主进行预约的操作
+
 @RestController
 @RequestMapping("/")
 public class appointController {

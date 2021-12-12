@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+//开发商自己的一些操作，登录，销售情况查看，名下小区查看
+
 @Controller
 @RequestMapping("/developer")
 public class developerController {

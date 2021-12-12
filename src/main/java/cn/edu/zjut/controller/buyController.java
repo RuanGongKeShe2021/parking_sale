@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
+//业主对购买的一些操作
+
 @Controller
 @RequestMapping("/")
 public class buyController {
