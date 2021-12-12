@@ -27,6 +27,7 @@
             <result property="lot_num" column="lot_num"/>
         </association>
     </resultMap>
+
     <select id="selectAppointByOwnerId" parameterType="String" resultMap="Appoint1">
         select a.*,o.name,o.IDNumber,o.sex,o.phone,l.address,l.lot_picture,c.name
         from appoint a,owner o,lot l,community c

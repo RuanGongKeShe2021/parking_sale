@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.HashMap;
 import java.util.Map;
 
-@RestController
+@Controller
 @RequestMapping("/")
 public class adminAppointController {
     @Autowired
     private AppointService appointService;
     @RequestMapping("")
-    public  Map<String,Integer> appointGot(String lot_id){
-        int got_appoint_id = appointService.AppointGot(lot_id);
+    public String appointGot(String community_id){
+        Map<String,Integer> map = appointService.AppointGot(community_id);
 //        将摇中号传到前端
         Map<String,Integer> result=new HashMap<String,Integer>();
         result.put("got_appoint_id",got_appoint_id);

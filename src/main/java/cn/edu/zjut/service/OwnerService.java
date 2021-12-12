@@ -76,4 +76,14 @@ public class OwnerService implements IOwnerService{
     public List<Owner> SelectOwnerByCommunityId(String community_id) {
         return ownerDao.selectOwnerByCommunityId(community_id);
     }
+
+    @Override
+    public List<Owner> SelectUnCertificated(String community_id) {
+        return ownerDao.selectUnCertificated(community_id);
+    }
+
+    @Override
+    public List<Owner> selectCertificated(String community_id) {
+        return ownerDao.selectCertificated(community_id);
+    }
 }

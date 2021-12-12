@@ -73,4 +73,16 @@
         from owner
         where owner_id = #{owner_id}
     </delete>
+
+
+    <select id="selectUnCertificated" parameterType="String">
+        select *
+        from owner
+        where certificated = 0
+    </select>
+    <select id="selectCertificated" parameterType="String">
+        select *
+        from owner
+        where certificated = 1
+    </select>
 </mapper>

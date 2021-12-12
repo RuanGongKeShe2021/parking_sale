@@ -6,30 +6,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.HashMap;
-import java.util.Map;
-
 @Controller
-@RequestMapping("/admin")
-public class adminController {
+@RequestMapping("/")
+public class developerAdminController {
     @Autowired
     private AdminService adminService;
-    @RequestMapping("/login")
-    public Map login(String admin_id,String password){
-        Map result=new HashMap();
-        Admin admin=adminService.SelectAdminById(admin_id);
-        if (admin.getPassword().equals(password)){
-            result.put("success",true);
-            result.put("admin",admin);
-        }
-        else{
-            result.put("success",false);
-        }
-        return result;
+    @RequestMapping("/")
+    public String addAdmin(Admin admin){
+        if(adminService.AddAdmin(admin)){
+            return "";
+        }else return "";
     }
     @RequestMapping("/")
     public String updateAdmin(Admin admin){
         if(adminService.UpdateAdmin(admin)){
+            return "";
+        }else return "";
+    }
+    @RequestMapping("/")
+    public String deleteAdmin(String admin_id){
+        if(adminService.DeleteAdmin(admin_id)){
             return "";
         }else return "";
     }

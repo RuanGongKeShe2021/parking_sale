@@ -12,4 +12,6 @@ public interface IOwnerService {
     public boolean UpdateOwnerCertification(String owner_id);
     public boolean DeleteOwner(String owner_id);
     public List<Owner> SelectOwnerByCommunityId(String community_id);
+    public List<Owner> SelectUnCertificated(String community_id);
+    public List<Owner> selectCertificated(String community_id);
 }

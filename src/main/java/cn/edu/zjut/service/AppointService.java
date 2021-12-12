@@ -1,12 +1,16 @@
 package cn.edu.zjut.service;
 
 import cn.edu.zjut.dao.AppointDao;
+import cn.edu.zjut.dao.LotDao;
 import cn.edu.zjut.po.Appoint;
+import cn.edu.zjut.po.Lot;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 @Service("appointService")
@@ -14,7 +18,8 @@ public class AppointService implements IAppointService{
 
     @Autowired
     private AppointDao appointDao;
-
+    @Autowired
+    private LotDao lotDao;
     @Override
     public List<Appoint> FindAllAppoint(String owner_id) {
         return appointDao.selectAppointByOwnerId(owner_id);
@@ -68,14 +73,21 @@ public class AppointService implements IAppointService{
 
 //    摇号
     @Override
-    public int AppointGot(String lot_id) {
-        List<Appoint> list = appointDao.selectAppointByLotId(lot_id);
-        Random rd = new Random();
-        int number=list.size();
-        int randon = rd.nextInt(number);
-        int tmp = list.get(randon).getAppoint_id();
-        if(UpdateAppointGot(tmp)){
-            return tmp;
-        }else return 0;
+    public Map<String,Integer> AppointGot(String community_id) {
+        Map<String, Integer> map = new HashMap<>();
+        List<Lot> lot_list = lotDao.selectLotByCommunityId(community_id);
+        for (Lot lot : lot_list) {
+            List<Appoint> list = appointDao.selectAppointByLotId(lot.getLot_id());
+            int len = list.size();
+            if (len == 1) {
+                map.put(lot.getLot_id(),list.get(0).getAppoint_id());
+            } else {
+                Random rd = new Random();
+                int randon = rd.nextInt(len) + 1;
+                int tmp = list.get(randon).getAppoint_id();
+                UpdateAppointGot(tmp);
+                map.put(lot.getLot_id(), tmp);
+            }
+        }return map;
     }
 }

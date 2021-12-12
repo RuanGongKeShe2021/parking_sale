@@ -7,6 +7,7 @@
         <id property="lot_id" column="lot_id"/>
         <result property="address" column="address"/>
         <result property="lot_picture" column="lot_picture"/>
+        <result property="sale_status" column="sale_status"/>
         <association property="community" javaType="cn.edu.zjut.po.Community">
             <id property="community_id" column="community_id"/>
             <result property="name" column="name"/>
@@ -33,6 +34,14 @@
         </collection>
     </resultMap>
 
+<!--    活动时间结束后更新活动标志位 和 所有车位可购买标志位-->
+    <update id="updateStatusByTime">
+        update lot l,sale s
+        set l.sale_status = 1,s.status = "End"
+        where l.community_id = s.community_id
+        and (select current_date() > s.endtime)
+    </update>
+
     <select id="selectLotByCommunityId" parameterType="String" resultMap="Lot1">
         select l.*, c.name
         from lot l,community c
@@ -46,6 +55,16 @@
         where l.comunity_id = c.community_id
           and l.lot_id = #{lot_id}
     </select>
+
+<!--    查看车位是否可以直接购买-->
+    <select id="selectLotSaleStatus" parameterType="String" resultMap="Lot1">
+        select l.*, c.name,
+        from lot l,community c,buy b
+        where l.sale_status = 0
+          and l.comunity_id = c.community_id
+          and l.community_id = #{community_id}
+    </select>
+
 <!--查询某小区已销售和未销售的车位-->
     <select id="selectLotSoldByCommunityId" parameterType="String" resultMap="Lot1">
         select l.*, c.name,
@@ -55,6 +74,14 @@
           and l.buy_id = b.buy_id
           and l.community_id = #{community_id}
     </select>
+
+<!--    抽签结束剩余车位可进行直接购买-->
+    <update id="updateSaleStatus" parameterType="String">
+        update lot
+        set sale_status = 1
+        where lot_id = #{lot_id}
+    </update>
+
     <select id="selectLotUnsoldByCommunityId" parameterType="String" resultMap="Lot1">
         select l.*, c.name,
         from lot l,community c
