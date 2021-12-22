@@ -44,6 +44,5 @@
     </bean>
 
     <context:component-scan base-package="cn.edu.zjut.service"/>
-    <context:component-scan base-package="cn.edu.zjut.dao"/>
 
 </beans>
