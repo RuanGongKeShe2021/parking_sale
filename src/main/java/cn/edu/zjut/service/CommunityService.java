@@ -9,6 +9,7 @@ import java.util.List;
 
 @Service("communityService")
 public class CommunityService implements ICommunityService{
+
     @Autowired
     private CommunityDao communityDao;
 
