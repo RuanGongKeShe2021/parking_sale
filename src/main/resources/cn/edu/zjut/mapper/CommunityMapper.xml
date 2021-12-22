@@ -22,7 +22,8 @@
             <id property="lot_id" column="lot_id"/>
             <result property="address" column="address"/>
             <result property="lot_picture" column="lot_picture"/>
-            <result property="status" column="status"/>
+            <result property="sale_status" column="sale_status"/>
+            <result property="price" column="price"/>
         </collection>
         <collection property="owner" ofType="cn.edu.zjut.po.Owner">
             <id property="owner_id" column="owner_id"/>
@@ -41,6 +42,14 @@
         where c.developer_id = d.developer_id
           and c.admin_id = a.admin_id
           and c.community_id = #{community_id}
+    </select>
+<!--    通过名字查询小区-->
+    <select id="selectCommunityByName" parameterType="String" resultMap="Community1">
+        select c.community_id,c.name,c.lot_num,d.developer_id,d.name,d.phone,a.admin_id
+        from community c ,developer d,admin a
+        where c.developer_id = d.developer_id
+          and c.admin_id = a.admin_id
+          and c.name = #{name}
     </select>
 
 <!--    通过业主ID查询其拥有房产的小区-->

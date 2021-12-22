@@ -20,6 +20,8 @@
             <id property="lot_id" column="lot_id"/>
             <result property="address" column="address"/>
             <result property="lot_picture" column="lot_picture"/>
+            <result property="sale_status" column="status"/>
+            <result property="price" column="price"/>
         </association>
         <association property="community" javaType="cn.edu.zjut.po.Community">
             <id property="community_id" column="community_id"/>
@@ -29,7 +31,7 @@
     </resultMap>
 
     <select id="selectAppointByOwnerId" parameterType="String" resultMap="Appoint1">
-        select a.*,o.name,o.IDNumber,o.sex,o.phone,l.address,l.lot_picture,c.name
+        select a.*,o.name,o.IDNumber,o.sex,o.phone,l.address,l.lot_picture,l.sale_status,l.price,c.name
         from appoint a,owner o,lot l,community c
         where a.owner_id = o.owner_id
           and a.community_id = c.community_id
@@ -38,7 +40,7 @@
     </select>
 
     <select id="selectAppointByLotId"  parameterType="String" resultMap="Appoint1">
-        select a.*,o.name,o.IDNumber,o.sex,o.phone,l.address,l.lot_picture,c.name
+        select a.*,o.name,o.IDNumber,o.sex,o.phone,l.address,l.lot_picture,l.sale_status,l.price,c.name
         from appoint a,owner o,lot l,community c
         where a.owner_id = o.owner_id
           and a.community_id = c.community_id

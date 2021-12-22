@@ -20,11 +20,13 @@
             <id property="lot_id" column="lot_id"/>
             <result property="address" column="address"/>
             <result property="lot_picture" column="lot_picture"/>
+            <result property="sale_status" column="sale_status"/>
+            <result property="price" column="price"/>
         </association>
     </resultMap>
 
     <select id="selectBuyById" parameterType="Integer" resultMap="Buy1">
-        select b.buy_id,b.time,b.status,o.*,l.lot_id,l.address,l.lot_picture
+        select b.buy_id,b.time,b.status,o.*,l.lot_id,l.address,l.lot_picture,l.sale_status,l.price
         from buy b,owner o,lot l
         where b.owner_id = o.owner_id
           and l.lot_id = b.lot_id
@@ -32,7 +34,7 @@
     </select>
 <!--    通过业主ID筛选购买记录-->
     <select id="selectBuyByOwnerId" parameterType="String" resultMap="Buy1">
-        select b.buy_id,b.time,b.status,o.*,l.lot_id,l.address,l.lot_picture
+        select b.buy_id,b.time,b.status,o.*,l.lot_id,l.address,l.lot_picture,l.sale_status,l.price
         from buy b,owner o,lot l
         where b.owner_id = o.owner_id
           and l.lot_id = b.lot_id
@@ -40,7 +42,7 @@
     </select>
 <!--    通过车位ID查询购买记录-->
     <select id="selectBuyByLotId"  parameterType="String" resultMap="Buy1">
-        select b.buy_id,b.time,b.status,o.*,l.lot_id,l.address,l.lot_picture
+        select b.buy_id,b.time,b.status,o.*,l.lot_id,l.address,l.lot_picture,l.sale_status,l.price
         from buy b,owner o,lot l
         where b.owner_id = o.owner_id
           and l.lot_id = b.lot_id

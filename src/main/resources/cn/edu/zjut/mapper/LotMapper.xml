@@ -8,6 +8,7 @@
         <result property="address" column="address"/>
         <result property="lot_picture" column="lot_picture"/>
         <result property="sale_status" column="sale_status"/>
+        <result property="price" column="price"/>
         <association property="community" javaType="cn.edu.zjut.po.Community">
             <id property="community_id" column="community_id"/>
             <result property="name" column="name"/>
@@ -101,12 +102,12 @@
     </update>
 
     <insert id="addLot" parameterType="cn.edu.zjut.po.Lot">
-        insert into lot (lot_id,,community_id,address,lot_picture,owner_id,buy_id)
-        values (#{lot.lot_id},#{community.community_id},#{address},#{lot_picture},#{owner.owner_id},#{buy.buy_id})
+        insert into lot (lot_id,,community_id,address,lot_picture,owner_id,buy_id,sale_status,price)
+        values (#{lot.lot_id},#{community.community_id},#{address},#{lot_picture},#{owner.owner_id},#{buy.buy_id},#{sale_status},#{price})
     </insert>
     <update id="updateLot" parameterType="cn.edu.zjut.po.Lot">
         update lot
-        set community_id=#{community.community_id}, address=#{address}, lot_picture=#{lot_picture}, owner_id=#{owner.owner_id}, buy_id=#{buy.buy_id}
+        set community_id=#{community.community_id}, address=#{address}, lot_picture=#{lot_picture}, owner_id=#{owner.owner_id}, buy_id=#{buy.buy_id},sale_status=#{sale_status},price=#{price}
         where lot_id = #{lot_id}
     </update>
     <delete id="deleteLot" parameterType="String">

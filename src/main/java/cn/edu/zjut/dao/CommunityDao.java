@@ -10,6 +10,7 @@ import java.util.List;
 @Mapper
 public interface CommunityDao {
     public Community selectCommunityById(String community_id);
+    public Community selectCommunityByName(String name);
     public List<Community> selectCommunityByOwnerId(String owner_id);
     public List<Community> findAll(String developer_id);
     public int addCommunity(Community community);

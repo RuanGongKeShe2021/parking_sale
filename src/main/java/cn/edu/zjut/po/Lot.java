@@ -12,6 +12,7 @@ public class Lot {
     private Owner owner = null;
     private Set appoint = new HashSet(0);
     private int sale_status = 0;
+    private int price;
 
     public Lot() {
     }
@@ -78,5 +79,13 @@ public class Lot {
 
     public void setSale_status(int sale_status) {
         this.sale_status = sale_status;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
     }
 }

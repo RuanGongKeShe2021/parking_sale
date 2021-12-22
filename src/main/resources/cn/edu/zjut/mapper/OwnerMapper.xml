@@ -73,8 +73,6 @@
         from owner
         where owner_id = #{owner_id}
     </delete>
-
-
     <select id="selectUnCertificated" parameterType="String">
         select *
         from owner

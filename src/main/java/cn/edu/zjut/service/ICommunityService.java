@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface ICommunityService {
     public Community SelectCommunityById(String community_id);
+    public Community SelectCommunityByName(String name);
     public List<Community> SelectCommunityByOwnerId(String owner_id);
     public List<Community> FindAllCommunity(String developer_id);
     public boolean AddCommunity(Community community);

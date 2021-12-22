@@ -8,7 +8,7 @@ public class Sale {
     private Date endtime;
     private String content;
     private Community community;
-
+    private String status;
     public Sale() {
     }
 
@@ -50,5 +50,13 @@ public class Sale {
 
     public void setCommunity(Community community) {
         this.community = community;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

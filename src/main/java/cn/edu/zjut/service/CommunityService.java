@@ -18,6 +18,11 @@ public class CommunityService implements ICommunityService{
     }
 
     @Override
+    public Community SelectCommunityByName(String name) {
+        return communityDao.selectCommunityByName(name);
+    }
+
+    @Override
     public List<Community> SelectCommunityByOwnerId(String owner_id) {
         return communityDao.selectCommunityByOwnerId(owner_id);
     }
